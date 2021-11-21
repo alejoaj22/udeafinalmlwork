@@ -1,4 +1,4 @@
-name: iris-aml-env
+name: california-house-prices
 dependencies:
   - python=3.8
   - scikit-learn

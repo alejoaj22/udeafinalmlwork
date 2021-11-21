@@ -5,11 +5,11 @@ from azureml.core.model import Model
 from azureml.core.webservice import AciWebservice, AksWebservice
 
 ws = Workspace.from_config(path='./.azureml',_file_name='config.json')
-model = Model(ws,name='iris_model',version=1)
+model = Model(ws,name='house-price-model',version=3)
 
 env = Environment.from_conda_specification(
-        name='sklearn-aml-env',
-        file_path='./.azureml/sklearn-env-aml.yml'
+        name='california-house-prices',
+        file_path='./.azureml/my-model-aml-env.yml'
     )
 
 inference_config = InferenceConfig(entry_script="./src/score.py", environment=env)
@@ -17,7 +17,7 @@ inference_config = InferenceConfig(entry_script="./src/score.py", environment=en
 deployment_config = AksWebservice.deploy_configuration(cpu_cores = 1, memory_gb = 1)
 
 aci_service = Model.deploy(workspace=ws, 
-                       name='iris-model-service', 
+                       name='house-price-service', 
                        models=[model], 
                        inference_config=inference_config, 
                        deployment_config = deployment_config)
