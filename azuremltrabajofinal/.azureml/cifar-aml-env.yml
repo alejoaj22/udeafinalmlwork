@@ -1,0 +1,12 @@
+name: cifar-aml-env
+channels:
+    - defaults
+    - pytorch
+dependencies:
+    - python=3.8
+    - pytorch
+    - torchvision
+    - pip
+    - pip:
+        - azureml-core
+
