@@ -1,3 +1,0 @@
-azureml-core
-azureml-defaults
-tensorflow
