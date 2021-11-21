@@ -5,7 +5,10 @@ from azureml.core.model import Model
 from azureml.core.webservice import AciWebservice
 
 ws = Workspace.from_config(path='./.azureml',_file_name='config.json')
+
 model = Model(ws,name='house-price-model',version=3)
+
+scaler = Model(ws,name='house-price-model-scaler',version=1)
 
 env = Environment.from_conda_specification(
         name='california-house-prices',
@@ -18,9 +21,11 @@ deployment_config = AciWebservice.deploy_configuration(cpu_cores = 1, memory_gb 
 
 aci_service = Model.deploy(workspace=ws, 
                        name='house-price-service', 
-                       models=[model], 
+                       models=[model, scaler], 
                        inference_config=inference_config, 
                        deployment_config = deployment_config)
 
 aci_service.wait_for_deployment(show_output=True)
 print(aci_service.state)
+
+print(aci_service.get_logs())
